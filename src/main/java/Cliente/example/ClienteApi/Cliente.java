@@ -1,41 +1,26 @@
 package Cliente.example.ClienteApi;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class Cliente {
     @Id
-   private String nome;
-   private Long id;
-   private String profissao;
-   private String rua;
-   private Integer cep;
-   private Integer numero;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @NotNull(message = "O nome é obrigatório!")
+    private String nomeCompleto;
+    private String profissao;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Endereco> endereco;
 
-    public Cliente(String nome, Long id, String profissao, String rua, Integer cep, Integer numero) {
-        this.nome = nome;
-        this.id = id;
-        this.profissao = profissao;
-        this.rua = rua;
-        this.cep = cep;
-        this.numero = numero;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public Cliente() {
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getProfissao() {
@@ -46,27 +31,26 @@ public class Cliente {
         this.profissao = profissao;
     }
 
-    public String getRua() {
-        return rua;
+    public Cliente(Long id, String nome, List<Endereco> enderecoList) {
+        this.id = id;
+        this.nomeCompleto = nome;
+        this.endereco = enderecoList;
+        this.profissao = profissao;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
+    public String getNome() {
+        return nomeCompleto;
     }
 
-    public Integer getCep() {
-        return cep;
+    public void setNome(String nome) {
+        this.nomeCompleto = nome;
     }
 
-    public void setCep(Integer cep) {
-        this.cep = cep;
+    public List<Endereco> getEndereco() {
+        return endereco;
     }
 
-    public Integer getNumero() {
-        return numero;
-    }
-
-    public void setNumero(Integer numero) {
-        this.numero = numero;
+    public void setEndereco(List<Endereco> endereco) {
+        this.endereco = endereco;
     }
 }
